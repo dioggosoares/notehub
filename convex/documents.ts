@@ -279,7 +279,7 @@ export const update = mutation({
 
     const { id, ...rest } = args
 
-    const existingDocument = await ctx.db.get(args.id)
+    const existingDocument = await ctx.db.get(id)
 
     if (!existingDocument) {
       throw new Error(FEEDBACK_MESSAGES.NOT_FOUND)
@@ -289,7 +289,7 @@ export const update = mutation({
       throw new Error(FEEDBACK_MESSAGES.UNAUTHORIZED)
     }
 
-    const document = await ctx.db.patch(args.id, {
+    const document = await ctx.db.patch(id, {
       ...rest,
     })
 

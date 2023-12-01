@@ -1,19 +1,24 @@
 import { ElementRef, MouseEvent, useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { ChevronsLeft, Menu } from 'lucide-react'
+import { ChevronsLeft, Menu, PlusCircle, Search, Settings } from 'lucide-react'
 import { useMediaQuery } from 'usehooks-ts'
-// import { useMutation } from 'convex/react'
+import { useMutation } from 'convex/react'
 import { toast } from 'sonner'
 
 import { cn } from '@/lib/utils'
 import { api } from '@/convex/_generated/api'
 import { UserItem } from './user-item'
+import { Item } from './item'
+import { DocumentList } from './document-list'
+import { FEEDBACK_MESSAGES } from '@/constants/messages'
+import { DEFAULT_STRINGS } from '@/constants/general'
 
 export function Navigation() {
   const pathname = usePathname()
   const router = useRouter()
   const isMobile = useMediaQuery('(max-width: 768px)')
-  // const create = useMutation(api.documents.create)
+  const isMobileSmall = useMediaQuery('(max-width: 360px)')
+  const create = useMutation(api.documents.create)
 
   const isResizingRef = useRef(false)
   const sidebarRef = useRef<ElementRef<'aside'>>(null)
@@ -21,6 +26,7 @@ export function Navigation() {
 
   const [isResetting, setIsResetting] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(isMobile)
+  const [isScrolling, setIsScrolling] = useState(false)
 
   useEffect(() => {
     if (isMobile) {
@@ -92,15 +98,25 @@ export function Navigation() {
     }
   }
 
-  const handleCreate = () => {
-    // const promise = create({ title: 'Untitled' }).then((documentId) =>
+  function onScrolling(e: any) {
+    if (e.target.scrollTop > 10) {
+      setIsScrolling(true)
+    } else {
+      setIsScrolling(false)
+    }
+  }
+
+  function onCreate() {
+    const promise = create({ title: DEFAULT_STRINGS.UNTITLED })
+    // const promise = create({ title: DEFAULT_STRINGS.UNTITLED }).then((documentId) =>
     //   router.push(`/documents/${documentId}`),
     // )
-    // toast.promise(promise, {
-    //   loading: 'Criando um novo documento...',
-    //   success: 'Novo documento criado!',
-    //   error: 'Falha ao criar novo documento.',
-    // })
+
+    toast.promise(promise, {
+      loading: FEEDBACK_MESSAGES.ON_NEWPAGE_LOADING,
+      success: FEEDBACK_MESSAGES.ON_NEWPAGE_SUCCESS,
+      error: FEEDBACK_MESSAGES.ON_NEWPAGE_ERROR,
+    })
   }
 
   return (
@@ -109,7 +125,7 @@ export function Navigation() {
         ref={sidebarRef}
         className={cn(
           `group/sidebar relative z-[99999] flex h-full w-60 flex-col
-          overflow-y-auto bg-secondary`,
+          overflow-y-hidden bg-secondary`,
           isResetting && 'transition-all duration-300 ease-in-out',
           isMobile && 'w-0',
         )}
@@ -118,21 +134,37 @@ export function Navigation() {
           role="button"
           onClick={collapse}
           className={cn(
-            `absolute right-2 top-3 h-6 w-6 rounded-sm text-muted-foreground
+            `group absolute right-2 top-3 h-6 w-6 rounded-sm text-muted-foreground
             opacity-0 transition hover:bg-neutral-300 group-hover/sidebar:opacity-100
           dark:hover:bg-neutral-600`,
             isMobile && 'opacity-100',
           )}
         >
-          <ChevronsLeft className="h-6 w-6 text-indigo-600/40" />
+          <ChevronsLeft className="h-6 w-6 text-indigo-600/40 transition-transform group-hover:animate-wiggle" />
         </div>
 
-        <div>
+        <div className="flex flex-col gap-y-2">
           <UserItem />
+          <Item onClick={() => {}} label="Pesquisar" icon={Search} isSearch />
+          <Item onClick={() => {}} label="Configurações" icon={Settings} />
+          <Item
+            onClick={onCreate}
+            label="Nova página"
+            icon={PlusCircle}
+            isNewPage
+          />
         </div>
 
-        <div className="mt-4">
-          <p>Documents</p>
+        <div
+          onScroll={onScrolling}
+          className={cn(
+            `scrollbar-hide mt-4 max-h-[35rem] overflow-y-auto
+            md:max-h-[45rem] lg:max-h-[30rem] xl:max-h-[35rem] 2xl:max-h-[50rem]`,
+            isMobileSmall && 'max-h-[26rem]',
+            isScrolling && 'border-t shadow-sm transition duration-150 ease-in',
+          )}
+        >
+          <DocumentList />
         </div>
 
         <div
