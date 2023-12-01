@@ -44,7 +44,7 @@ export default function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-            storageKey={STORAGE_KEYS.Notehub_THEME}
+            storageKey={STORAGE_KEYS.NOTEHUB_THEME}
           >
             <Toaster position="bottom-center" />
             {children}

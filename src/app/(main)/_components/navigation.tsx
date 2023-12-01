@@ -1,4 +1,4 @@
-import { ElementRef, MouseEvent, useRef, useState } from 'react'
+import { ElementRef, MouseEvent, useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { ChevronsLeft, Menu } from 'lucide-react'
 import { useMediaQuery } from 'usehooks-ts'
@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 
 import { cn } from '@/lib/utils'
 import { api } from '@/convex/_generated/api'
+import { UserItem } from './user-item'
 
 export function Navigation() {
   const pathname = usePathname()
@@ -20,6 +21,20 @@ export function Navigation() {
 
   const [isResetting, setIsResetting] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(isMobile)
+
+  useEffect(() => {
+    if (isMobile) {
+      collapse()
+    } else {
+      resetWidth()
+    }
+  }, [isMobile])
+
+  useEffect(() => {
+    if (isMobile) {
+      collapse()
+    }
+  }, [pathname, isMobile])
 
   const handleMouseDown = (event: MouseEvent) => {
     event.preventDefault()
@@ -55,12 +70,12 @@ export function Navigation() {
       setIsCollapsed(false)
       setIsResetting(true)
 
-      sidebarRef.current.style.width = isMobile ? '100%' : '15rem'
+      sidebarRef.current.style.width = isMobile ? '90%' : '15rem'
       navbarRef.current.style.setProperty(
         'width',
         isMobile ? '0' : 'calc(100% - 240px)',
       )
-      navbarRef.current.style.setProperty('left', isMobile ? '100%' : '15rem')
+      navbarRef.current.style.setProperty('left', isMobile ? '90%' : '15rem')
       setTimeout(() => setIsResetting(false), 300)
     }
   }
@@ -71,7 +86,7 @@ export function Navigation() {
       setIsResetting(true)
 
       sidebarRef.current.style.width = '0'
-      navbarRef.current.style.setProperty('width', '100%')
+      navbarRef.current.style.setProperty('width', '90%')
       navbarRef.current.style.setProperty('left', '0')
       setTimeout(() => setIsResetting(false), 300)
     }
@@ -82,9 +97,9 @@ export function Navigation() {
     //   router.push(`/documents/${documentId}`),
     // )
     // toast.promise(promise, {
-    //   loading: 'Criando uma nova nota...',
-    //   success: 'Nova nota criada!',
-    //   error: 'Falha ao criar uma nova nota.',
+    //   loading: 'Criando um novo documento...',
+    //   success: 'Novo documento criado!',
+    //   error: 'Falha ao criar novo documento.',
     // })
   }
 
@@ -93,8 +108,8 @@ export function Navigation() {
       <aside
         ref={sidebarRef}
         className={cn(
-          `group/sidebar relative z-[99999] flex h-full w-60
-          flex-col overflow-y-auto bg-secondary`,
+          `group/sidebar relative z-[99999] flex h-full w-60 flex-col
+          overflow-y-auto bg-secondary`,
           isResetting && 'transition-all duration-300 ease-in-out',
           isMobile && 'w-0',
         )}
@@ -113,7 +128,7 @@ export function Navigation() {
         </div>
 
         <div>
-          <p>Action items</p>
+          <UserItem />
         </div>
 
         <div className="mt-4">
@@ -138,7 +153,11 @@ export function Navigation() {
       >
         <nav className="w-full bg-transparent px-3 py-2">
           {isCollapsed && (
-            <Menu role="button" className="h-6 w-6 text-muted-foreground" />
+            <Menu
+              onClick={resetWidth}
+              role="button"
+              className="h-6 w-6 text-muted-foreground"
+            />
           )}
         </nav>
       </div>
