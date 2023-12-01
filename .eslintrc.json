@@ -1,0 +1,16 @@
+{
+  "extends": [
+    "@primittive/eslint-config/next",
+    "next/core-web-vitals"
+  ],
+  "rules": {
+    "no-useless-return": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "prefer-regex-literals": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "no-var": "off"
+  }
+}
