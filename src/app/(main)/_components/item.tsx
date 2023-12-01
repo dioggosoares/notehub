@@ -1,7 +1,14 @@
 'use client'
 
-import { ChevronRight, LucideIcon, Plus } from 'lucide-react'
+import {
+  ChevronRight,
+  LucideIcon,
+  MoreHorizontal,
+  Plus,
+  Trash,
+} from 'lucide-react'
 import { ComponentProps, MouseEvent } from 'react'
+import { useUser } from '@clerk/clerk-react'
 import { useRouter } from 'next/navigation'
 import { useMutation } from 'convex/react'
 import { toast } from 'sonner'
@@ -14,6 +21,13 @@ import { FEEDBACK_MESSAGES } from '@/constants/messages'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 import { DEFAULT_STRINGS } from '@/constants/general'
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from '@/components/ui/dropdown-menu'
 
 interface ItemsProps extends ComponentProps<'div'> {
   id?: Id<'documents'>
@@ -26,7 +40,7 @@ interface ItemsProps extends ComponentProps<'div'> {
   onExpand?: () => void
   label: string
   icon: LucideIcon
-  onClick: () => void
+  onClick?: () => void
 }
 
 export function Item({
@@ -42,9 +56,23 @@ export function Item({
   label,
   onClick,
 }: ItemsProps) {
+  const { user } = useUser()
   const router = useRouter()
 
   const create = useMutation(api.documents.create)
+  const archive = useMutation(api.documents.archive)
+
+  const onArchive = (event: MouseEvent) => {
+    event.stopPropagation()
+    if (!id) return
+    const promise = archive({ id }).then(() => router.push('/documents'))
+
+    toast.promise(promise, {
+      loading: FEEDBACK_MESSAGES.ON_DELETE_PAGE_LOADING,
+      success: FEEDBACK_MESSAGES.ON_DELETE_PAGE_SUCCESS,
+      error: FEEDBACK_MESSAGES.ON_DELETE_PAGE_ERROR,
+    })
+  }
 
   function handleExpand(event: MouseEvent) {
     event.stopPropagation()
@@ -85,17 +113,21 @@ export function Item({
       {!!id && (
         <div
           role="button"
-          className="mr-1 h-full rounded-sm hover:bg-neutral-300
-          dark:bg-neutral-600"
           onClick={handleExpand}
+          className="group rounded-sm p-1"
         >
-          <ChevronRight
-            className={cn(
-              `h-4 w-4 shrink-0 text-muted-foreground/50 transition duration-300
+          <div
+            className="mr-1 h-full rounded-sm hover:bg-neutral-300
+          dark:bg-neutral-600"
+          >
+            <ChevronRight
+              className={cn(
+                `h-4 w-4 shrink-0 text-muted-foreground/50 transition duration-300
               ease-in-out`,
-              expanded ? 'rotate-90' : 'rotate-0',
-            )}
-          />
+                expanded ? 'rotate-90' : 'rotate-0',
+              )}
+            />
+          </div>
         </div>
       )}
       {documentIcon ? (
@@ -125,13 +157,44 @@ export function Item({
       )}
       {!!id && (
         <div className="ml-auto flex items-center gap-x-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger onClick={(e) => e.stopPropagation()} asChild>
+              <div
+                role="button"
+                className="ml-auto h-full rounded-sm opacity-0 hover:bg-neutral-300
+                group-hover:opacity-100 dark:hover:bg-neutral-600"
+              >
+                <MoreHorizontal className="h-[1.125rem] w-[1.125rem] text-muted-foreground" />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-60"
+              align="start"
+              side="right"
+              forceMount
+            >
+              <DropdownMenuItem
+                role="button"
+                onClick={onArchive}
+                className="cursor-pointer"
+                variant="destructive"
+              >
+                <Trash className="mr-2 h-4 w-4" />
+                Mover para a lixeira
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <div className="p-2 text-xs text-muted-foreground">
+                Última edição por: {user?.fullName}
+              </div>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <div
             role="button"
             onClick={onCreate}
             className="ml-auto h-full rounded-sm opacity-0 hover:bg-neutral-300
             group-hover:opacity-100 dark:hover:bg-neutral-600"
           >
-            <Plus className="h-4 w-4 text-muted-foreground" />
+            <Plus className="h-[1.125rem] w-[1.125rem] text-muted-foreground" />
           </div>
         </div>
       )}

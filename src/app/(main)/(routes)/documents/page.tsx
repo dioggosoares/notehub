@@ -30,7 +30,7 @@ export default function Documents() {
   return (
     // <div className="flex h-full flex-col items-center justify-center space-y-4">
     <div className="flex h-full flex-col items-start space-y-4">
-      <div className="flex h-1 w-full bg-indigo-700/30" />
+      <div className="flex h-1 w-full bg-indigo-700/30 dark:bg-indigo-300" />
       <div className="flex w-full flex-1 flex-col items-center justify-center space-y-4">
         <Image
           src="/empty.png"

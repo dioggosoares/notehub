@@ -1,17 +1,33 @@
 import { ElementRef, MouseEvent, useEffect, useRef, useState } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { ChevronsLeft, Menu, PlusCircle, Search, Settings } from 'lucide-react'
+import {
+  ChevronsLeft,
+  Menu,
+  Plus,
+  PlusCircle,
+  Search,
+  Settings,
+  Trash,
+} from 'lucide-react'
 import { useMediaQuery } from 'usehooks-ts'
 import { useMutation } from 'convex/react'
 import { toast } from 'sonner'
 
 import { cn } from '@/lib/utils'
 import { api } from '@/convex/_generated/api'
-import { UserItem } from './user-item'
-import { Item } from './item'
-import { DocumentList } from './document-list'
 import { FEEDBACK_MESSAGES } from '@/constants/messages'
 import { DEFAULT_STRINGS } from '@/constants/general'
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+
+import { DocumentList } from './document-list'
+import { UserItem } from './user-item'
+import { Item } from './item'
+import { TrashBox } from './trash-box'
 
 export function Navigation() {
   const pathname = usePathname()
@@ -106,10 +122,10 @@ export function Navigation() {
     }
   }
 
-  function onCreate() {
+  function handleCreate() {
     const promise = create({ title: DEFAULT_STRINGS.UNTITLED })
-    // const promise = create({ title: DEFAULT_STRINGS.UNTITLED }).then((documentId) =>
-    //   router.push(`/documents/${documentId}`),
+    // const promise = create({ title: DEFAULT_STRINGS.UNTITLED }).then(
+    //   (documentId) => router.push(`/documents/${documentId}`),
     // )
 
     toast.promise(promise, {
@@ -140,7 +156,7 @@ export function Navigation() {
             isMobile && 'opacity-100',
           )}
         >
-          <ChevronsLeft className="h-6 w-6 text-indigo-600/40 transition-transform group-hover:animate-wiggle" />
+          <ChevronsLeft className="h-6 w-6 text-indigo-600/40 transition-transform group-hover:animate-wiggle dark:text-indigo-300" />
         </div>
 
         <div className="flex flex-col gap-y-2">
@@ -148,7 +164,7 @@ export function Navigation() {
           <Item onClick={() => {}} label="Pesquisar" icon={Search} isSearch />
           <Item onClick={() => {}} label="Configurações" icon={Settings} />
           <Item
-            onClick={onCreate}
+            onClick={handleCreate}
             label="Nova página"
             icon={PlusCircle}
             isNewPage
@@ -165,6 +181,23 @@ export function Navigation() {
           )}
         >
           <DocumentList />
+          <Item
+            onClick={handleCreate}
+            label="Adicionar uma página"
+            icon={Plus}
+          />
+          <Popover>
+            <PopoverTrigger className="mt-4 w-full">
+              <Item label="Lixeira" icon={Trash} />
+            </PopoverTrigger>
+            <PopoverContent
+              side={isMobile ? 'bottom' : 'right'}
+              sideOffset={0}
+              className="w-72 p-0"
+            >
+              <TrashBox />
+            </PopoverContent>
+          </Popover>
         </div>
 
         <div

@@ -55,7 +55,7 @@ export function DocumentList({
   }
 
   return (
-    <div id="documents-list">
+    <>
       <p
         style={{
           paddingLeft: level ? `${level * 12 + 25}px` : '.75rem',
@@ -86,6 +86,6 @@ export function DocumentList({
           )}
         </div>
       ))}
-    </div>
+    </>
   )
 }

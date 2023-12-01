@@ -6,4 +6,13 @@ export enum FEEDBACK_MESSAGES {
   ON_NEWPAGE_LOADING = 'Criando uma nova página...',
   ON_NEWPAGE_SUCCESS = 'Nova página criada!',
   ON_NEWPAGE_ERROR = 'Falha ao criar nova página.',
+  ON_DELETE_PAGE_LOADING = 'Movendo para o lixo...',
+  ON_DELETE_PAGE_SUCCESS = 'Página movida para o lixo!',
+  ON_DELETE_PAGE_ERROR = 'Falha ao arquivar página.',
+  ON_RESTORE_PAGE_LOADING = 'Restaurando página...',
+  ON_RESTORE_PAGE_SUCCESS = 'Página restaurada!',
+  ON_RESTORE_PAGE_ERROR = 'Falha ao restaurar página.',
+  ON_REMOVE_PAGE_LOADING = 'Deletando página...',
+  ON_REMOVE_PAGE_SUCCESS = 'Página detelada!',
+  ON_REMOVE_PAGE_ERROR = 'Falha ao deletar página.',
 }
