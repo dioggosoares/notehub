@@ -1,8 +1,8 @@
 import { ElementRef, MouseEvent, useEffect, useRef, useState } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import {
   ChevronsLeft,
-  Menu,
+  MenuIcon,
   Plus,
   PlusCircle,
   Search,
@@ -28,12 +28,14 @@ import { useSearch } from '@/hooks/use-search'
 import { useSettings } from '@/hooks/use-settings'
 
 import { DocumentList } from './document-list'
-import { UserItem } from './user-item'
-import { Item } from './item'
 import { TrashBox } from './trash-box'
+import { UserItem } from './user-item'
+import { Navbar } from './navbar'
+import { Item } from './item'
 
 export function Navigation() {
   const pathname = usePathname()
+  const params = useParams()
   const router = useRouter()
   const search = useSearch()
   const settings = useSettings()
@@ -100,7 +102,7 @@ export function Navigation() {
       sidebarRef.current.style.width = isMobile ? '90%' : '15rem'
       navbarRef.current.style.setProperty(
         'width',
-        isMobile ? '0' : 'calc(100% - 240px)',
+        isMobile ? '0' : 'calc(100% - 15rem)',
       )
       navbarRef.current.style.setProperty('left', isMobile ? '90%' : '15rem')
       setTimeout(() => setIsResetting(false), 300)
@@ -128,10 +130,9 @@ export function Navigation() {
   }
 
   function handleCreate() {
-    const promise = create({ title: DEFAULT_STRINGS.UNTITLED })
-    // const promise = create({ title: DEFAULT_STRINGS.UNTITLED }).then(
-    //   (documentId) => router.push(`/documents/${documentId}`),
-    // )
+    const promise = create({ title: DEFAULT_STRINGS.UNTITLED }).then(
+      (documentId) => router.push(`/documents/${documentId}`),
+    )
 
     toast.promise(promise, {
       loading: FEEDBACK_MESSAGES.ON_NEWPAGE_LOADING,
@@ -155,13 +156,16 @@ export function Navigation() {
           role="button"
           onClick={collapse}
           className={cn(
-            `group absolute right-2 top-3 h-6 w-6 rounded-sm text-muted-foreground
+            `group absolute right-2 top-2.5 h-6 w-6 rounded-sm text-muted-foreground
             opacity-0 transition hover:bg-neutral-300 group-hover/sidebar:opacity-100
           dark:hover:bg-neutral-600`,
             isMobile && 'opacity-100',
           )}
         >
-          <ChevronsLeft className="h-6 w-6 text-indigo-600/40 transition-transform group-hover:animate-wiggle dark:text-indigo-300" />
+          <ChevronsLeft
+            className="h-6 w-6 text-indigo-600/40 transition-transform
+            group-hover:animate-wiggle dark:text-indigo-300"
+          />
         </div>
 
         <div className="flex flex-col gap-y-2">
@@ -230,15 +234,19 @@ export function Navigation() {
           isMobile && 'left-0 w-full',
         )}
       >
-        <nav className="w-full bg-transparent px-3 py-2">
-          {isCollapsed && (
-            <Menu
-              onClick={resetWidth}
-              role="button"
-              className="h-6 w-6 text-muted-foreground"
-            />
-          )}
-        </nav>
+        {!!params.documentId ? (
+          <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
+        ) : (
+          <nav className="w-full bg-transparent px-3 py-2">
+            {isCollapsed && (
+              <MenuIcon
+                onClick={resetWidth}
+                role="button"
+                className="h-6 w-6 text-muted-foreground"
+              />
+            )}
+          </nav>
+        )}
       </div>
     </>
   )

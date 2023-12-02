@@ -65,7 +65,7 @@ export function Item({
   const onArchive = (event: MouseEvent) => {
     event.stopPropagation()
     if (!id) return
-    const promise = archive({ id }).then(() => router.push('/documents'))
+    const promise = archive({ id }).then(() => router.push(`/documents/${id}`))
 
     toast.promise(promise, {
       loading: FEEDBACK_MESSAGES.ON_DELETE_PAGE_LOADING,
@@ -89,7 +89,7 @@ export function Item({
       if (!expanded) {
         onExpand?.()
       }
-      // router.push(`/documents/${documentId}`)
+      router.push(`/documents/${documentId}`)
     })
 
     toast.promise(promise, {

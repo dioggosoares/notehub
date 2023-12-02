@@ -25,7 +25,7 @@ export function UserItem() {
           className="flex w-full items-center p-3 text-sm hover:bg-primary/5"
         >
           <div className="flex max-w-[9.375rem] items-center gap-x-2">
-            <Avatar className="h-5 w-5 ring-2 ring-neutral-900">
+            <Avatar className="h-5 w-5 rounded-sm ring-2 ring-neutral-900">
               <AvatarImage src={user?.imageUrl} alt="Avatar do usuário" />
               <AvatarFallback>
                 {user ? initialLetters(user.fullName!) : ''}
@@ -50,7 +50,7 @@ export function UserItem() {
           </p>
           <div className="flex items-center gap-x-2">
             <div className="rounded-md bg-secondary p-1">
-              <Avatar className="h-8 w-8 ring-2 ring-neutral-900">
+              <Avatar className="h-8 w-8 rounded-sm ring-2 ring-neutral-900">
                 <AvatarImage src={user?.imageUrl} alt="Avatar do usuário" />
                 <AvatarFallback>
                   {user ? initialLetters(user.fullName!) : ''}
