@@ -11,7 +11,7 @@ import { Dialog, DialogContent, DialogHeader } from '@/components/ui/dialog'
 import { api } from '@/convex/_generated/api'
 import { Id } from '@/convex/_generated/dataModel'
 
-export const CoverImageModal = () => {
+export function CoverImageModal() {
   const params = useParams()
   const update = useMutation(api.documents.update)
   // const coverImage = useCoverImage()

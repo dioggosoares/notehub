@@ -24,6 +24,9 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 
+import { useSearch } from '@/hooks/use-search'
+import { useSettings } from '@/hooks/use-settings'
+
 import { DocumentList } from './document-list'
 import { UserItem } from './user-item'
 import { Item } from './item'
@@ -32,6 +35,8 @@ import { TrashBox } from './trash-box'
 export function Navigation() {
   const pathname = usePathname()
   const router = useRouter()
+  const search = useSearch()
+  const settings = useSettings()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const isMobileSmall = useMediaQuery('(max-width: 360px)')
   const create = useMutation(api.documents.create)
@@ -161,8 +166,17 @@ export function Navigation() {
 
         <div className="flex flex-col gap-y-2">
           <UserItem />
-          <Item onClick={() => {}} label="Pesquisar" icon={Search} isSearch />
-          <Item onClick={() => {}} label="Configurações" icon={Settings} />
+          <Item
+            onClick={search.onOpen}
+            label="Pesquisar"
+            icon={Search}
+            isSearch
+          />
+          <Item
+            onClick={settings.onOpen}
+            label="Configurações"
+            icon={Settings}
+          />
           <Item
             onClick={handleCreate}
             label="Nova página"

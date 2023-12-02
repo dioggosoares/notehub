@@ -118,12 +118,12 @@ export function Item({
         >
           <div
             className="mr-1 h-full rounded-sm hover:bg-neutral-300
-          dark:bg-neutral-600"
+          dark:hover:bg-neutral-600"
           >
             <ChevronRight
               className={cn(
                 `h-4 w-4 shrink-0 text-muted-foreground/50 transition duration-300
-              ease-in-out`,
+                ease-in-out`,
                 expanded ? 'rotate-90' : 'rotate-0',
               )}
             />

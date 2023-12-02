@@ -2,9 +2,10 @@ import { Toaster } from 'sonner'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import { ConvexClientProvider } from '@/components/providers/convex.provider'
+import { ModalProvider } from '@/components/providers/modal-provider'
 import { ThemeProvider } from '@/components/providers/theme-provider'
 import { STORAGE_KEYS } from '@/constants/general'
-import { ConvexClientProvider } from '@/components/providers/convex.provider'
 
 import './styles/globals.css'
 
@@ -47,6 +48,7 @@ export default function RootLayout({
             storageKey={STORAGE_KEYS.NOTEHUB_THEME}
           >
             <Toaster position="bottom-center" />
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </ConvexClientProvider>
