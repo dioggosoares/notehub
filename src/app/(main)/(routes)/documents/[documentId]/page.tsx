@@ -9,6 +9,7 @@ import { Id } from '@/convex/_generated/dataModel'
 import { Toolbar } from '@/components/toolbar'
 import { Cover } from '@/components/cover'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Helpers } from '@/components/helpers'
 
 interface DocumentIdPageProps {
   params: {
@@ -65,6 +66,7 @@ export default function Document({ params }: DocumentIdPageProps) {
           initialContent={document.content}
         /> */}
       </div>
+      <Helpers />
     </div>
   )
 }
