@@ -11,7 +11,7 @@ import { Button } from '@/components/ui/button'
 import { useCoverImage } from '@/hooks/use-cover-image'
 import { api } from '@/convex/_generated/api'
 import { Id } from '@/convex/_generated/dataModel'
-// import { useEdgeStore } from '@/lib/edgestore'
+import { useEdgeStore } from '@/lib/edgestore'
 
 interface CoverImageProps {
   url?: string
@@ -19,21 +19,21 @@ interface CoverImageProps {
 }
 
 export const Cover = ({ url, preview }: CoverImageProps) => {
-  // const { edgestore } = useEdgeStore()
+  const { edgestore } = useEdgeStore()
   const params = useParams()
   const coverImage = useCoverImage()
-  // const removeCoverImage = useMutation(api.documents.removeCoverImage)
+  const removeCoverImage = useMutation(api.documents.removeCoverImage)
 
-  // const onRemove = async () => {
-  //   if (url) {
-  //     await edgestore.publicFiles.delete({
-  //       url,
-  //     })
-  //   }
-  //   removeCoverImage({
-  //     id: params.documentId as Id<'documents'>,
-  //   })
-  // }
+  const onRemove = async () => {
+    if (url) {
+      await edgestore.publicFiles.delete({
+        url,
+      })
+    }
+    removeCoverImage({
+      id: params.documentId as Id<'documents'>,
+    })
+  }
 
   return (
     <div
@@ -56,16 +56,16 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
             size="sm"
           >
             <ImageIcon className="mr-2 h-4 w-4" />
-            Change cover
+            Mudar capa
           </Button>
           <Button
-            onClick={() => {}}
+            onClick={onRemove}
             className="text-xs text-muted-foreground"
             variant="outline"
             size="sm"
           >
             <X className="mr-2 h-4 w-4" />
-            Remove
+            Remover
           </Button>
         </div>
       )}
@@ -74,5 +74,5 @@ export const Cover = ({ url, preview }: CoverImageProps) => {
 }
 
 Cover.Skeleton = function CoverSkeleton() {
-  return <Skeleton className="h-[12vh] w-full" />
+  return <Skeleton className="h-[35vh] w-full" />
 }
