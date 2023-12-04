@@ -99,12 +99,12 @@ export function Navigation() {
       setIsCollapsed(false)
       setIsResetting(true)
 
-      sidebarRef.current.style.width = isMobile ? '90%' : '15rem'
+      sidebarRef.current.style.width = isMobile ? '100%' : '15rem'
       navbarRef.current.style.setProperty(
         'width',
         isMobile ? '0' : 'calc(100% - 15rem)',
       )
-      navbarRef.current.style.setProperty('left', isMobile ? '90%' : '15rem')
+      navbarRef.current.style.setProperty('left', isMobile ? '100%' : '15rem')
       setTimeout(() => setIsResetting(false), 300)
     }
   }
@@ -115,7 +115,7 @@ export function Navigation() {
       setIsResetting(true)
 
       sidebarRef.current.style.width = '0'
-      navbarRef.current.style.setProperty('width', '90%')
+      navbarRef.current.style.setProperty('width', '100%')
       navbarRef.current.style.setProperty('left', '0')
       setTimeout(() => setIsResetting(false), 300)
     }

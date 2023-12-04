@@ -12,13 +12,17 @@ import { FEEDBACK_MESSAGES } from '@/constants/messages'
 import { DEFAULT_STRINGS } from '@/constants/general'
 
 import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
 
 export default function Documents() {
+  const router = useRouter()
   const { user } = useUser()
   const create = useMutation(api.documents.create)
 
   function onCreate() {
-    const promise = create({ title: DEFAULT_STRINGS.UNTITLED })
+    const promise = create({ title: DEFAULT_STRINGS.UNTITLED }).then(
+      (documentId) => router.push(`/documents/${documentId}`),
+    )
 
     toast.promise(promise, {
       loading: FEEDBACK_MESSAGES.ON_NEWPAGE_LOADING,

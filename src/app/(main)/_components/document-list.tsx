@@ -66,7 +66,7 @@ export function DocumentList({
           level === 0 && 'hidden',
         )}
       >
-        Sem páginas
+        Não contém páginas
       </p>
       {documents.map((document) => (
         <div key={document._id}>

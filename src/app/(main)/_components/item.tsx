@@ -61,16 +61,31 @@ export function Item({
 
   const create = useMutation(api.documents.create)
   const archive = useMutation(api.documents.archive)
+  const restore = useMutation(api.documents.restore)
+
+  function onRestore(documentId: Id<'documents'>) {
+    const promise = restore({ id: documentId })
+
+    toast.promise(promise, {
+      loading: FEEDBACK_MESSAGES.ON_RESTORE_PAGE_LOADING,
+      success: FEEDBACK_MESSAGES.ON_RESTORE_PAGE_SUCCESS,
+      error: FEEDBACK_MESSAGES.ON_RESTORE_PAGE_ERROR,
+    })
+  }
 
   const onArchive = (event: MouseEvent) => {
     event.stopPropagation()
     if (!id) return
-    const promise = archive({ id }).then(() => router.push(`/documents/${id}`))
+    const promise = archive({ id }).then(() => router.push(`/documents`))
 
     toast.promise(promise, {
       loading: FEEDBACK_MESSAGES.ON_DELETE_PAGE_LOADING,
       success: FEEDBACK_MESSAGES.ON_DELETE_PAGE_SUCCESS,
       error: FEEDBACK_MESSAGES.ON_DELETE_PAGE_ERROR,
+      action: {
+        label: 'Desfazer',
+        onClick: () => onRestore(id),
+      },
     })
   }
 
@@ -85,7 +100,7 @@ export function Item({
     const promise = create({
       title: DEFAULT_STRINGS.UNTITLED,
       parentDocument: id,
-    }).then((documentId) => {
+    }).then((documentId: Id<'documents'>) => {
       if (!expanded) {
         onExpand?.()
       }
@@ -137,7 +152,7 @@ export function Item({
       ) : (
         <Icon
           className={cn(
-            `mr-2 h-[1.125rem] shrink-0`,
+            `mr-2 h-[1.125rem] w-[1.125rem] shrink-0`,
             isNewPage && !isSearch
               ? 'text-neutral-50'
               : 'text-muted-foreground',

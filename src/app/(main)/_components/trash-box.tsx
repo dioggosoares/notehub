@@ -75,7 +75,7 @@ export function TrashBox() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="h-7 bg-secondary px-2 focus-visible:ring-transparent"
-          placeholder="Filtras pelo título da página..."
+          placeholder="Filtrar pelo título da página..."
         />
       </div>
       <div className="mt-2 px-1 pb-1">
