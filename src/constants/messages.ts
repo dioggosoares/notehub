@@ -15,4 +15,10 @@ export enum FEEDBACK_MESSAGES {
   ON_REMOVE_PAGE_LOADING = 'Deletando página...',
   ON_REMOVE_PAGE_SUCCESS = 'Página detelada!',
   ON_REMOVE_PAGE_ERROR = 'Falha ao deletar página.',
+  ON_PUBLISHING_PAGE_LOADING = 'Publicando...',
+  ON_PUBLISHING_PAGE_SUCCESS = 'Página publicada.',
+  ON_PUBLISHING_PAGE_ERROR = 'Falha ao publicar página.',
+  ON_UNPUBLISHING_PAGE_LOADING = 'Despublicando...',
+  ON_UNPUBLISHING_PAGE_SUCCESS = 'Página despublicada.',
+  ON_UNPUBLISHING_PAGE_ERROR = 'Falha ao despublicar página.',
 }

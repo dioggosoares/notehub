@@ -13,8 +13,9 @@ import { useMediaQuery } from 'usehooks-ts'
 import { useMutation } from 'convex/react'
 import { toast } from 'sonner'
 
-import { cn } from '@/lib/utils'
 import { api } from '@/convex/_generated/api'
+
+import { cn } from '@/lib/utils'
 import { FEEDBACK_MESSAGES } from '@/constants/messages'
 import { DEFAULT_STRINGS } from '@/constants/general'
 
@@ -205,7 +206,7 @@ export function Navigation() {
             icon={Plus}
           />
           <Popover>
-            <PopoverTrigger className="mt-4 w-full">
+            <PopoverTrigger className="mt-4 flex w-full justify-between">
               <Item label="Lixeira" icon={Trash} />
             </PopoverTrigger>
             <PopoverContent
