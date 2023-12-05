@@ -10,6 +10,7 @@ import { Id } from '@/convex/_generated/dataModel'
 import { Toolbar } from '@/components/toolbar'
 import { Cover } from '@/components/cover'
 import { Skeleton } from '@/components/ui/skeleton'
+import { notFound } from 'next/navigation'
 
 interface DocumentIdPageProps {
   params: {
@@ -53,7 +54,7 @@ const DocumentIdPage = ({ params }: DocumentIdPageProps) => {
   }
 
   if (document === null) {
-    return <div>Not found</div>
+    return notFound()
   }
 
   return (

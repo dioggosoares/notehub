@@ -51,7 +51,7 @@ export default function Documents() {
           className="hidden dark:block"
         />
         <h2 className="text-lg font-medium">
-          Bem-vindo ao {user?.firstName}&apos;s Notehub
+          Bem-vindo ao Notehub do {user?.firstName}
         </h2>
         <Button onClick={onCreate}>
           <PlusCircle className="mr-2 h-4 w-4" />

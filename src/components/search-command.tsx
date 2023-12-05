@@ -56,7 +56,7 @@ export const SearchCommand = () => {
 
   return (
     <CommandDialog open={isOpen} onOpenChange={onClose}>
-      <CommandInput placeholder={`Pesquisar ${user?.fullName}'s Notehub...`} />
+      <CommandInput placeholder={`Pesquisar no Notehub ${user?.fullName}...`} />
       <CommandList>
         <CommandEmpty>Sem resultados.</CommandEmpty>
         <CommandGroup heading="Documentos">

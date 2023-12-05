@@ -32,7 +32,7 @@ export function UserItem() {
               </AvatarFallback>
             </Avatar>
             <span className="line-clamp-1 text-start font-medium">
-              {user?.fullName}&apos;s Notehub
+              Notehub do {user?.fullName}
             </span>
           </div>
           <ChevronsUpDown className="ml-2 h-4 w-4 text-muted-foreground" />
@@ -59,7 +59,7 @@ export function UserItem() {
             </div>
             <div className="space-y-1">
               <p className="line-clamp-1 text-sm">
-                {user?.fullName}&apos;s Notehub
+                Notehub do {user?.fullName}
               </p>
             </div>
           </div>

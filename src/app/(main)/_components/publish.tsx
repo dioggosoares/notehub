@@ -53,8 +53,8 @@ export function Publish({ initialData }: PublishProps) {
 
     toast.promise(promise, {
       loading: FEEDBACK_MESSAGES.ON_UNPUBLISHING_PAGE_LOADING,
-      success: FEEDBACK_MESSAGES.ON_UNPUBLISHING_PAGE_LOADING,
-      error: FEEDBACK_MESSAGES.ON_UNPUBLISHING_PAGE_LOADING,
+      success: FEEDBACK_MESSAGES.ON_UNPUBLISHING_PAGE_SUCCESS,
+      error: FEEDBACK_MESSAGES.ON_UNPUBLISHING_PAGE_ERROR,
     })
   }
 
