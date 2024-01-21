@@ -5,8 +5,8 @@
 
 ## 📄 Descrição
 
-Esse clone do Notion foi desenvolvido com intuído de estudo, testei o RealTimeDB do SaaS (Convex - https://convex.dev/), BFF utilizando NextJS 14 e Server Components e Edgstore como Bucket (https://edgestore.dev/)
-Foi feito somente as funcionalidades básicas da aplicação mundialmente conhecida.
+Esse clone do Notion foi desenvolvido com intuído de estudo, testei o RealTimeDB do SaaS (Convex - https://convex.dev/), BFF utilizando NextJS 14 e Server Components e Edgstore como Bucket (https://edgestore.dev/),
+somente as funcionalidades básicas da aplicação foram desenvolvidas.
 
 ## 🌎 Versão Ao Vivo
 
